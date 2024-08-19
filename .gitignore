@@ -1,0 +1,25 @@
+# Ignore environment variables
+.env
+
+# Ignore build output
+/build
+/dist
+
+# Ignore node modules
+node_modules
+
+# Ignore package-lock.json
+package-lock.json
+
+# Ignore macOS and Windows hidden files
+.DS_Store
+Thumbs.db
+
+# Ignore specific file types
+*.log
+*.swp
+*.suo
+*.bak
+
+# Ignore IDE files
+.vscode/
