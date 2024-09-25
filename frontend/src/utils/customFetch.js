@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const customFetch = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: "https://instaclone-backend-xsfg.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
