@@ -1,35 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Container } from "@chakra-ui/react";
+import { Navigate, RouterProvider } from "react-router";
+import HomePage from "./pages/HomePage";
+import SignupPage from "./pages/SignupPage";
+import SigninPage from "./pages/SigninPage";
+import NewsFeed from "./components/NewsFeed";
+import { useSelector } from "react-redux";
+import PostPage from "./pages/PostPage";
+import ProfilePage, { loader as profileloader } from "./pages/ProfilePage";
+import ErrorPage from "./pages/ErrorPage";
+import { createBrowserRouter } from "react-router-dom";
+import SettingPage, { loader as settingLoader } from "./pages/SettingPage";
+import MessagesPage, { loader as messageLoader } from "./pages/MessagesPage";
+import StoriesPage, {
+  loader,
+  loader as storyLoader,
+} from "./pages/StoriesPage";
+import { store } from "./store";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { user } = useSelector((state) => state.user);
+  const router = createBrowserRouter([
+    {
+      path: "/signup",
+      element: <SignupPage />,
+    },
+    {
+      path: "/signin",
+      element: <SigninPage />,
+    },
+    {
+      path: "/",
+      element: user ? <HomePage /> : <Navigate to="/signin" />,
+      errorElement: <ErrorPage />,
+      // loader: HomeLoader(store),
+      children: [
+        {
+          index: true,
+          element: <NewsFeed />,
+        },
+        {
+          path: "post/:pId",
+          element: <PostPage />,
+        },
+        {
+          path: "profile/:username",
+          element: <ProfilePage />,
+          loader: profileloader,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "setting",
+          element: <SettingPage />,
+          loader: settingLoader,
+          errorElement: <ErrorPage />,
+        },
+      ],
+    },
+    {
+      path: "/messages/:participantId?",
+      element: <MessagesPage />,
+      loader: messageLoader,
+    },
+    {
+      path: "/stories/:username/:storyId?",
+      element: <StoriesPage />,
+      loader: storyLoader,
+    },
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <RouterProvider router={router}></RouterProvider>
+    // <Container
+    //   width={
+    //     pathname === "/" ? { base: "350px", sm: "500px", md: "900px" } : "620px"
+    //   }
+    // >
+
+    // </Container>
+  );
 }
 
-export default App
+export default App;

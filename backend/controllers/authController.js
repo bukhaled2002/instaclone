@@ -12,18 +12,21 @@ const createSendToken = (user, status, res) => {
       res.status(404).json({ message: "error in token" });
     }
     const cookieOption = {
-      expires: new Date(Date.now() + 1000 * 24 * 60 * 60 * 10),
-      httpOnly: true,
+      // httpOnly: true,
+      sameSite: "strict", // Helps protect against CSRF
+      maxAge: 24 * 60 * 60 * 1000, // Cookie will expire in 1 day
     };
     if (process.env.NODE_ENV === "production") {
       cookieOption.secure = true;
     }
 
     res.cookie("jwt", token, cookieOption);
+    user.password = undefined;
     res.status(status).json({
       status: "success",
       message: "singed up successfully",
       token,
+      data: { user },
     });
   } catch (error) {
     console.log(error);
@@ -32,12 +35,15 @@ const createSendToken = (user, status, res) => {
 };
 exports.signup = async (req, res, next) => {
   try {
+    console.log(req.body);
     const { name, username, email, password } = req.body;
-    if (await User.findOne({ email })) {
-      next(new AppError("email is already registered"));
+    let x = await User.findOne({ email });
+    console.log(x);
+    if (x) {
+      next(new AppError("email is already registered", 404));
     }
     if (await User.findOne({ username })) {
-      next(new AppError("username is already taken, try another one"));
+      next(new AppError("username is already taken, try another one", 404));
     }
     const newUser = await User.create({ name, username, email, password });
     console.log(newUser);
@@ -46,7 +52,7 @@ exports.signup = async (req, res, next) => {
   } catch (error) {
     console.log(error);
 
-    next(new AppError("error in credintials", 404));
+    return next(new AppError("error in credintials", 404));
   }
 };
 
@@ -94,6 +100,7 @@ exports.protect = async (req, res, next) => {
         )
       );
     }
+
     req.user = currentUser;
     next();
   } catch (error) {}

@@ -32,9 +32,26 @@ const userSchema = new mongoose.Schema(
     },
     following: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
     followers: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
+    saved: [{ type: mongoose.Schema.ObjectId, ref: "Post" }],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+userSchema.virtual("stories", {
+  ref: "Story",
+  foreignField: "author",
+  localField: "_id",
+});
+
+userSchema.pre(/^find/, function (next) {
+  this.password = undefined;
+  next();
+});
+userSchema.pre("findOne", function (next) {
+  this.populate({
+    path: "stories",
+  });
+  next();
+});
 userSchema.methods.correctPassword = async function (password, dbPassword) {
   return await bcryptjs.compare(password, dbPassword);
 };

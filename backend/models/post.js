@@ -15,9 +15,25 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     likes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
-    comments: [{ type: mongoose.Schema.ObjectId, ref: "Comment" }],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+postSchema.virtual("comments", {
+  ref: "Comment",
+  foreignField: "post",
+  localField: "_id",
+});
+postSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "comments",
+    sort: { createdAt: 1 },
+    populate: {
+      path: "author",
+      select: "username profilePic createdAt",
+    },
+  });
+  next();
+});
+
 const Post = mongoose.model("Post", postSchema);
 module.exports = Post;
