@@ -1,5 +1,6 @@
 import { Button, Container, Flex, Text } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ErrorPage() {
   console.log("assa");
@@ -16,7 +17,9 @@ function ErrorPage() {
         <Text fontWeight={"semibold"}>
           This Page is not defined yet, got to home page
         </Text>
-        <Button borderRadius={"md"}>Home page</Button>
+        <Button borderRadius={"md"} as={Link} to={"/"}>
+          Home page
+        </Button>
       </Flex>
     </Container>
   );

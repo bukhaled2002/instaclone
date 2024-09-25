@@ -18,5 +18,12 @@ customFetch.interceptors.request.use((config) => {
   }
   return config;
 });
-
+customFetch.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("API call failed:", error.response || error.message);
+    // Handle error appropriately here
+    return Promise.reject(error);
+  }
+);
 export default customFetch;

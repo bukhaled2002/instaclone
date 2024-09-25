@@ -1,11 +1,10 @@
+const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
 const AppError = require("../utils/AppError");
 const { filterObj } = require("../utils/helper");
 const { v2: cloudinary } = require("cloudinary");
 
 exports.getUsers = async (req, res, next) => {
-  console.log(req.query.searchParam);
-
   try {
     const searchParam = req.query.searchParam;
 
@@ -36,6 +35,7 @@ exports.getUser = async (req, res, next) => {
 exports.getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
+    user.password = undefined;
     res.status(200).json({
       status: "success",
       message: "profile retrieved successful",
@@ -116,7 +116,6 @@ exports.getFollowers = async (req, res, next) => {
       path: "followers",
       select: "username profilePic",
     });
-    console.log(followers);
 
     res
       .status(200)
@@ -132,7 +131,6 @@ exports.getFollowing = async (req, res, next) => {
       path: "following",
       select: "username profilePic",
     });
-    console.log(following);
 
     res
       .status(200)
@@ -145,11 +143,14 @@ exports.getFollowing = async (req, res, next) => {
 
 exports.suggestFriends = async (req, res, next) => {
   try {
+    const userId = new mongoose.Types.ObjectId(req.user.id);
     const following = (await User.findById(req.user.id)).following;
     const suggestions = await User.aggregate([
-      { $match: { _id: { $ne: [req.user.id, ...following] } } },
+      { $match: { _id: { $nin: [userId, ...following] } } },
       { $sample: { size: 5 } },
     ]);
+    suggestions.forEach((item) => (item.password = undefined));
+    console.log("suggestions", suggestions);
     res.status(200).json({
       message: "user suggestions retrieved successfully",
       suggestions,

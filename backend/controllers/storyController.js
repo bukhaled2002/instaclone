@@ -134,12 +134,14 @@ exports.getStories = async (req, res, next) => {
 };
 exports.getStoryViews = async (req, res, next) => {
   try {
-    const story = await Story.findById(req.params.storyId).populate({
-      path: "storyViews",
-      select: "profilePic username",
-    });
+    const story = await Story.findById(req.params.storyId)
+      .select("likes storyViews")
+      .populate({
+        path: "storyViews",
+        select: "profilePic username",
+      });
     console.log(story);
-    res.json({ storyViews: story.storyViews });
+    res.json({ story });
   } catch (error) {
     next(new AppError("cannot get story views"));
   }

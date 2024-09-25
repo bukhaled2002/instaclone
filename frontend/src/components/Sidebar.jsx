@@ -24,18 +24,20 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { TbBrandMessenger } from "react-icons/tb";
 import { TiHome } from "react-icons/ti";
 import { GoHome } from "react-icons/go";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CreatePost from "./CreatePost";
 import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import CreateStory from "./CreateStory";
 import SidbarSearch from "./SidebarSearch";
 import SidebarSearch from "./SidebarSearch";
+import { logout } from "../features/user/userSlice";
 function Sidebar() {
   const [openSidebarSearch, setOpenSidebarSearch] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSelector((state) => state.user);
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
+  const dispatch = useDispatch();
   const [isCreateStoryModalOpen, setIsCreateStoryModalOpen] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,13 +48,14 @@ function Sidebar() {
   return (
     <Flex
       h={{ base: "auto", md: "100vh" }}
-      position={"fixed"}
+      position={{ base: "fixed", md: "sticky" }}
       width={{ base: "100%", md: "auto" }}
       bg={"black"}
       top={{ base: "unset", md: 0 }}
       bottom={{ base: 0, md: "unset" }}
       left={0}
       zIndex={2}
+      // overflowX={"hidden"}
       borderRight={{ base: "none", md: "solid 0.5px gray" }}
       borderTop={{ base: "solid 0.5px gray", md: "none" }}
       // alignItems={"start"}
@@ -88,6 +91,7 @@ function Sidebar() {
           justifyContent={"space-around"}
           py={"5px"}
           position={"static"}
+          w={"100%"}
         >
           {/* <TiHome /> */}
           <Button
@@ -252,6 +256,7 @@ function Sidebar() {
 
           <MenuList bg={"gray.dark"} left={"0"}>
             <MenuItem
+              onClick={() => dispatch(logout())}
               bg={"gray.dark"}
               fontSize={"15px"}
               _hover={{ bg: "#7676766e" }}
@@ -259,6 +264,8 @@ function Sidebar() {
               Logout
             </MenuItem>
             <MenuItem
+              as={Link}
+              to={"/setting"}
               bg={"gray.dark"}
               fontSize={"15px"}
               _hover={{ bg: "#7676766e" }}

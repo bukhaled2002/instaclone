@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 const initialState = { user: null };
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     login: (state, action) => {
       state.user = action.payload;
+    },
+    logout: (state) => {
+      state.user = null;
+      Cookies.remove("jwt");
     },
     updateStories: (state, action) => {
       state.user.stories = action.payload;
@@ -40,6 +46,7 @@ const userSlice = createSlice({
 });
 export const {
   login,
+  logout,
   followUnfollowUser,
   updateUser,
   addStory,

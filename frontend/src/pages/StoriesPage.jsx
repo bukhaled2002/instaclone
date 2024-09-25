@@ -169,7 +169,7 @@ function StoriesPage() {
               mb={"5px"}
               display={"flex"}
               onSubmit={handleStoryReply}
-              gap={"5px"}
+              justifyContent={"space-between"}
               alignItems={"center"}
             >
               <Box cursor={"pointer"} onClick={handleLikeStory}>
@@ -179,7 +179,7 @@ function StoriesPage() {
                   <FaRegHeart fontSize={"27px"} />
                 )}
               </Box>
-              <Input
+              {/* <Input
                 placeholder="Add comment..."
                 p={"8px"}
                 flex={1}
@@ -189,7 +189,7 @@ function StoriesPage() {
                 _placeholder={{ color: "white" }}
                 onChange={(e) => setReplyInput(e.target.value)}
                 value={replyInput}
-              />
+              /> */}
               <Text as={"button"} type="submit">
                 <RiSendPlaneFill fontSize={"25px"} />
               </Text>
