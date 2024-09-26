@@ -17,7 +17,7 @@ const createSendToken = (user, status, res) => {
       maxAge: 1 * 60 * 60 * 1000, // Cookie will expire in 1 day
     };
     if (process.env.NODE_ENV === "production") {
-      cookieOption.secure = true;
+      // cookieOption.secure = true;
     }
 
     res.cookie("jwt", token, cookieOption);
