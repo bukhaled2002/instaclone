@@ -11,6 +11,8 @@ import ErrorPage from "./pages/ErrorPage";
 import { createBrowserRouter } from "react-router-dom";
 import SettingPage, { loader as settingLoader } from "./pages/SettingPage";
 import MessagesPage, { loader as messageLoader } from "./pages/MessagesPage";
+import Cookies from "js-cookie";
+
 import StoriesPage, {
   loader,
   loader as storyLoader,
@@ -18,6 +20,7 @@ import StoriesPage, {
 import { store } from "./store";
 
 function App() {
+  console.log("jwt", Cookies.get());
   const { user } = useSelector((state) => state.user);
   const router = createBrowserRouter([
     {
