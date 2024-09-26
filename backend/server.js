@@ -21,10 +21,7 @@ app.use(express.urlencoded({ extended: true })); // To parse form data in the re
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://instaclone-backend-xsfg.onrender.com",
-    ],
+    origin: ["http://localhost:5173", "https://instaclone-bxoe.onrender.com"],
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
