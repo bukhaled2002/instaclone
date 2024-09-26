@@ -35,10 +35,10 @@ function SigninPage() {
         "/user/signin",
         JSON.stringify(input)
       );
-      Cookies.set("jwt", response?.data?.token, {
-        secure: true,
-        httpOnly: true,
-      });
+      // Cookies.set("jwt", response?.data?.token, {
+      //   secure: true,
+      //   httpOnly: true,
+      // });
       toast({
         status: "success",
         description: "signed up successfully",
