@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import customFetch from "../utils/customFetch";
 import { followUnfollowUser } from "../features/user/userSlice";
+import { Link } from "react-router-dom";
 
 const Suggestion = () => {
   const [loading, setloading] = useState(true);
@@ -48,9 +49,18 @@ const Suggestion = () => {
     >
       <Flex alignItems={"center"} justifyContent={"space-between"}>
         <Box display="flex" gap={"15px"} flex>
-          <Avatar src={user.profilePic} />
+          <Avatar
+            as={Link}
+            to={`/profile/${user.username}`}
+            src={user.profilePic}
+          />
           <Box>
-            <Text fontSize={"15px"} fontWeight={"semibold"}>
+            <Text
+              as={Link}
+              to={`/profile/${user.username}`}
+              fontSize={"15px"}
+              fontWeight={"semibold"}
+            >
               {user.username}
             </Text>
             <Text fontSize={"12px"}>{user.name}</Text>
