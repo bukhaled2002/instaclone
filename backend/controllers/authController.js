@@ -13,7 +13,7 @@ const createSendToken = (user, status, res) => {
     }
     const cookieOption = {
       httpOnly: true,
-      sameSite: None, // Helps protect against CSRF
+      sameSite: "None", // Helps protect against CSRF
       maxAge: 1 * 60 * 60 * 1000, // Cookie will expire in 1 day
     };
     if (process.env.NODE_ENV === "production") {
