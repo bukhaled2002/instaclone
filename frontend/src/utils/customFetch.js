@@ -6,16 +6,16 @@ const customFetch = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  // withCredentials: "include", // Add this line to include credentials with requests
+  withCredentials: true, // Add this line to include credentials with requests
 });
 
 customFetch.interceptors.request.use((config) => {
   const authToken = Cookies.get("jwt");
   console.log(authToken);
 
-  if (authToken) {
-    config.headers.Authorization = `Bearer ${authToken}`;
-  }
+  // if (authToken) {
+  //   config.headers.Authorization = `Bearer ${authToken}`;
+  // }
   return config;
 });
 customFetch.interceptors.response.use(
