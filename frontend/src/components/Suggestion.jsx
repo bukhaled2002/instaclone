@@ -101,9 +101,18 @@ const Suggestion = () => {
                 justifyContent={"space-between"}
               >
                 <Box display="flex" gap={"15px"} flex>
-                  <Avatar src={item.profilePic} />
+                  <Avatar
+                    as={Link}
+                    to={`/profile/${item.username}`}
+                    src={item.profilePic}
+                  />
                   <Box>
-                    <Text fontSize={"15px"} fontWeight={"semibold"}>
+                    <Text
+                      as={Link}
+                      to={`/profile/${item.username}`}
+                      fontSize={"15px"}
+                      fontWeight={"semibold"}
+                    >
                       {item.username}
                     </Text>
                     <Text fontSize={"12px"}>{item.name}</Text>
