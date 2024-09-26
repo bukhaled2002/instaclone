@@ -15,9 +15,12 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import customFetch from "../utils/customFetch";
 import logo from "../assets/logo.svg";
+import { login } from "../features/user/userSlice";
 
 function SignupPage() {
   const toast = useToast();
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
@@ -36,13 +39,14 @@ function SignupPage() {
         JSON.stringify(input)
       );
       console.log(response.data);
-      Cookies.set("jwt", response.data.token);
+      // Cookies.set("jwt", response.data.token);
       toast({
         status: "success",
         description: "signed up successfully",
         duration: 3000,
         isClosable: true,
       });
+      dispatch(login(response.data.data.user));
       navigate("/");
     } catch (error) {
       toast({
