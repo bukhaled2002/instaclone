@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import customFetch from "../utils/customFetch";
 import logo from "../assets/logo.svg";
 import { login } from "../features/user/userSlice";
+import { useDispatch } from "react-redux";
 
 function SignupPage() {
   const toast = useToast();
