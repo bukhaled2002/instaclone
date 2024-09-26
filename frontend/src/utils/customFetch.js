@@ -6,7 +6,7 @@ const customFetch = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // Add this line to include credentials with requests
+  withCredentials: "include", // Add this line to include credentials with requests
 });
 
 customFetch.interceptors.request.use((config) => {
