@@ -12,7 +12,7 @@ const createSendToken = (user, status, res) => {
       res.status(404).json({ message: "error in token" });
     }
     const cookieOption = {
-      // httpOnly: true,
+      httpOnly: true,
       sameSite: "strict", // Helps protect against CSRF
       maxAge: 1 * 60 * 60 * 1000, // Cookie will expire in 1 day
     };

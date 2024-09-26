@@ -23,7 +23,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://instaclone-backend-xsfg.onrender.com/",
+      "https://instaclone-backend-xsfg.onrender.com",
     ],
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
