@@ -8,7 +8,7 @@ export const SocketContextProvider = ({ children }) => {
   const { user } = useSelector((state) => state.user);
   const [onlineUsers, setOnlineUsers] = useState([]);
   useEffect(() => {
-    const socket = io("http://localhost:3000", {
+    const socket = io("https://instaclone-backend-xsfg.onrender.com", {
       query: { userId: user?.id },
     });
     setSocket(socket);
