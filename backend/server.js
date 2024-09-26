@@ -24,7 +24,7 @@ app.use(
     origin: ["http://localhost:5173", "https://instaclone-bxoe.onrender.com"],
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
-    credentials: true,
+    // credentials: true,
   })
 );
 app.use("/api/v1/user", userRoute);
