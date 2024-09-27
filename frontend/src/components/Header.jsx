@@ -11,7 +11,7 @@ import {
   SkeletonText,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,17 +30,20 @@ function Header() {
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
 
-  const handleFollowUnfollow = async (e, id) => {
-    e.preventDefault();
-    dispatch(followUnfollowUser(id));
-    await customFetch.post(`/user/followUnfollow/${id}`);
+  const debounce = (func, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   };
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const performSearch = async (searchQuery) => {
     try {
       setIsLoading(true);
-      if (searchValue.length > 0) {
-        const response = await customFetch(`/user/?searchParam=${searchValue}`);
+      if (searchQuery.length > 0) {
+        const response = await customFetch(`/user/?searchParam=${searchQuery}`);
         console.log(response);
         setResults(response.data);
       } else {
@@ -51,6 +54,16 @@ function Header() {
     } finally {
       setIsLoading(false);
     }
+  };
+  const debouncedSearch = debounce(performSearch, 300);
+  useEffect(() => {
+    debouncedSearch(searchValue);
+  }, [searchValue]);
+
+  const handleFollowUnfollow = async (e, id) => {
+    e.preventDefault();
+    dispatch(followUnfollowUser(id));
+    await customFetch.post(`/user/followUnfollow/${id}`);
   };
   return (
     <Flex
@@ -92,7 +105,6 @@ function Header() {
           <Text>insta</Text>
           <Box
             as="form"
-            onSubmit={handleSearch}
             bg={"#54545470"}
             borderRadius={"10px"}
             display={"flex"}
