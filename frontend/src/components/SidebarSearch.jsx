@@ -51,23 +51,7 @@ function SidebarSearch() {
   useEffect(() => {
     debouncedSearch(searchValue);
   }, [searchValue]);
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    try {
-      setIsLoading(true);
-      if (searchValue.length > 0) {
-        const response = await customFetch(`/user/?searchParam=${searchValue}`);
-        console.log(response);
-        setResults(response.data);
-      } else {
-        setResults([]);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+
   const handleFollowUnfollow = async (e, id) => {
     e.preventDefault();
     dispatch(followUnfollowUser(id));
@@ -94,7 +78,6 @@ function SidebarSearch() {
         display={"flex"}
         gap={"5px"}
         alignItems={"center"}
-        onSubmit={handleSearch}
         p={"10px"}
       >
         <Input
