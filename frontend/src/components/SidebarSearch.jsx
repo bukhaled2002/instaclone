@@ -8,7 +8,7 @@ import {
   SkeletonCircle,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import customFetch from "../utils/customFetch";
 import { Link } from "react-router-dom";
@@ -19,10 +19,38 @@ function SidebarSearch() {
   const { user } = useSelector((state) => state.user);
   const [results, setResults] = useState([]);
   const dispatch = useDispatch();
-
   const [searchValue, setsearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const debounce = (func, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+  const performSearch = async (searchQuery) => {
+    try {
+      setIsLoading(true);
+      if (searchQuery.length > 0) {
+        const response = await customFetch(`/user/?searchParam=${searchQuery}`);
+        console.log(response);
+        setResults(response.data);
+      } else {
+        setResults([]);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const debouncedSearch = debounce(performSearch, 300);
+  useEffect(() => {
+    debouncedSearch(searchValue);
+  }, [searchValue]);
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
@@ -74,7 +102,6 @@ function SidebarSearch() {
           value={searchValue}
           bg={"none"}
           flex={1}
-          // maxW={"200px"}
           placeholder="Search..."
           fontSize={"15px"}
           _focusWithin={{
@@ -82,7 +109,7 @@ function SidebarSearch() {
             boxShadow: "none",
           }}
         />
-        <Text as={"button"} fontSize={"20px"} cursor={"pointer"} type="submit">
+        <Text as={"button"} fontSize={"20px"} cursor={"pointer"} type="button">
           <FaSearch />
         </Text>
       </Box>
