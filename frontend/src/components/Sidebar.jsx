@@ -158,7 +158,7 @@ function Sidebar() {
             to={"/messages"}
             bg={"transparent"}
             w={"100%"}
-            display={{ base: "none", md: "flex" }}
+            display={"flex"}
             alignItems={"center"}
             justifyContent={{ base: "center", md: "start" }}
             gap={"25px"}
@@ -170,7 +170,7 @@ function Sidebar() {
             as={NavLink}
             w={"100%"}
             bg={"transparent"}
-            display={"flex"}
+            display={{ base: "none", md: "flex" }}
             alignItems={"center"}
             justifyContent={{ base: "center", md: "start" }}
             gap={"25px"}

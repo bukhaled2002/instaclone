@@ -33,25 +33,25 @@ const storySchema = new mongoose.Schema(
 );
 
 storySchema.pre(/^find/, function (next) {
-  this.where({ active: true });
+  this.where({ expiresAt: { $lt: Date.now() } });
   next();
 });
 
 const Story = mongoose.model("Story", storySchema);
-async function updateStoryStatus() {
-  const now = new Date();
-  await Story.updateMany(
-    { expiresAt: { $lt: now }, active: true },
-    { active: false, archived: true }
-  );
-}
+// async function updateStoryStatus() {
+//   const now = new Date();
+//   await Story.updateMany(
+//     { expiresAt: { $lt: now }, active: true },
+//     { active: false, archived: true }
+//   );
+// }
 
-const intervalTime = 60 * 60 * 1000;
-setInterval(async () => {
-  try {
-    await updateStoryStatus();
-  } catch (error) {
-    console.error("Error in updating story status", error);
-  }
-}, intervalTime);
+// const intervalTime = 60 * 60 * 1000;
+// setInterval(async () => {
+//   try {
+//     await updateStoryStatus();
+//   } catch (error) {
+//     console.error("Error in updating story status", error);
+//   }
+// }, intervalTime);
 module.exports = Story;

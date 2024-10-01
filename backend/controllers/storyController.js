@@ -13,6 +13,7 @@ exports.groupedStories = async (req, res, next) => {
         $match: {
           author: { $in: following },
           active: true,
+          expiresAt: { $gt: Date.now() },
         },
       },
       {
@@ -119,7 +120,7 @@ exports.getStories = async (req, res, next) => {
     const user = (await User.findOne({ username: req.params.username })).id;
     const stories = await Story.find({
       author: user,
-      active: true,
+      expiresAt: { $gt: Date.now() },
     })
       .sort({ createdAt: 1 })
       .populate("author", "name username profilePic");
