@@ -8,10 +8,10 @@ exports.getUsers = async (req, res, next) => {
   try {
     const searchParam = req.query.searchParam;
 
-    // Use regex to match the first characters
     const users = await User.find({
+      _id: { $ne: req.user.id },
       $or: [
-        { email: { $regex: `^${searchParam}`, $options: "i" } }, // Case-insensitive match
+        { email: { $regex: `^${searchParam}`, $options: "i" } },
         { name: { $regex: `^${searchParam}`, $options: "i" } },
         { username: { $regex: `^${searchParam}`, $options: "i" } },
       ],
