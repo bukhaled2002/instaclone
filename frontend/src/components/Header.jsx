@@ -104,7 +104,6 @@ function Header() {
         <>
           <Text>insta</Text>
           <Box
-            as="form"
             bg={"#54545470"}
             borderRadius={"10px"}
             display={"flex"}

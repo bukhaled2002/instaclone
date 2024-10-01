@@ -72,7 +72,6 @@ function SidebarSearch() {
       overflowY={"auto"}
     >
       <Box
-        as="form"
         borderRadius={"xl"}
         bg={"gray.dark"}
         display={"flex"}
