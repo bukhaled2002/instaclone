@@ -106,6 +106,7 @@ function ProfilePage() {
               {user.stories.length > 0 ? (
                 <Avatar
                   as={Link}
+                  state={location.pathname}
                   to={`/stories/${user.username}`}
                   m={"4px"}
                   size={{ base: "lg", sm: "xl", md: "2xl" }}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router";
+import { useLoaderData, useLocation, useNavigate } from "react-router";
 import customFetch from "../utils/customFetch";
 import {
   Avatar,
@@ -22,6 +22,9 @@ export const loader = async ({ params }) => {
 
 function StoriesPage() {
   const [replyInput, setReplyInput] = useState("");
+  const location = useLocation();
+  console.log(location.state);
+  // const path  = location.state || '/
   const navigate = useNavigate();
   const { stories } = useLoaderData();
   const { user } = useSelector((state) => state.user);
