@@ -214,7 +214,7 @@ function ProfilePage() {
               </Heading>
               <Text>{user.bio}</Text>
               <Text fontSize={"13px"} color={"gray"}>
-                Followed by 18 more
+                Followed by {user.following.length}
               </Text>
             </Flex>
           </Flex>
