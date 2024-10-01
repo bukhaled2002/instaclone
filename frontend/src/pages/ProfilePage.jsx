@@ -98,7 +98,7 @@ function ProfilePage() {
             <Box
               border={
                 user.stories.length > 0 &&
-                `${isViewed || me.id === user.id ? "gray" : "red"} solid 4px`
+                `${isViewed | (me.id === user.id) ? "gray" : "red"} solid 4px`
               }
               h={"fit-content"}
               borderRadius={"100%"}
