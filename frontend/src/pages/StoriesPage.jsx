@@ -23,6 +23,7 @@ export const loader = async ({ params }) => {
 function StoriesPage() {
   const [replyInput, setReplyInput] = useState("");
   const location = useLocation();
+  console.log(location);
   console.log(location.state);
   // const path  = location.state || '/
   const navigate = useNavigate();
