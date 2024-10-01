@@ -40,9 +40,6 @@ function SettingPage() {
         "/user/updateMe",
         JSON.stringify({ profilePic: imgUrl, bio })
       );
-      console.log(user);
-      console.log(response.data.user);
-      dispatch(updateUser(response.data.user));
       toast({ title: "success", description: "Profile updated successfull" });
     } catch (error) {
       toast({ title: "error", description: "Cannot update profile" });
