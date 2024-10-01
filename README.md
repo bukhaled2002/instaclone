@@ -8,8 +8,7 @@ Welcome to the **Instagram Clone** project! This application mimics essential fe
 - **Post Editing**: Users have the ability to edit their own posts for better content management.
 - **Comment Engagement**: Likes on comments to boost discussions and enhance user interaction.
 - **User Management**: Easily follow and unfollow users to curate your social experience.
-- **Real-Time Newsfeed**: Stay updated with the latest posts through instant updates using WebSocket (Socket.IO).
-- **Chat System**: Comprehensive chat functionalities that allow real-time messaging, powered by WebSocket (Socket.IO).
+- **Real-Time Chat System**: Comprehensive chat functionalities that allow real-time messaging, powered by WebSocket (Socket.IO).
 - **Online Status**: Users can see who is online in real-time, enhancing connectivity and communication.
 
 ## Technologies Used
