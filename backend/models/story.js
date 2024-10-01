@@ -33,7 +33,7 @@ const storySchema = new mongoose.Schema(
 );
 
 storySchema.pre(/^find/, function (next) {
-  this.where({ expiresAt: { $lt: Date.now() } });
+  this.where({ expiresAt: { $gt: Date.now() } });
   next();
 });
 
