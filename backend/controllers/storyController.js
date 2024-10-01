@@ -12,27 +12,26 @@ exports.groupedStories = async (req, res, next) => {
       {
         $match: {
           author: { $in: following },
-          active: true,
-          expiresAt: { $gt: Date.now() },
+          expiresAt: { $gt: new Date() },
         },
       },
       {
-        $sort: { createdAt: -1 }, // Sort stories by createdAt in descending order
+        $sort: { createdAt: -1 },
       },
       {
         $group: {
           _id: "$author",
           stories: { $push: "$$ROOT" },
           count: { $sum: 1 },
-          latestCreatedAt: { $first: "$createdAt" }, // Get the latest story date
+          latestCreatedAt: { $first: "$createdAt" },
         },
       },
       {
         $lookup: {
-          from: "users", // The collection name for users
+          from: "users",
           localField: "_id",
           foreignField: "_id",
-          as: "authorDetails", // Name of the output array
+          as: "authorDetails",
         },
       },
       {
@@ -59,23 +58,11 @@ exports.groupedStories = async (req, res, next) => {
         $project: {
           _id: 0,
           stories: 1,
-          // {
-          //   $map: {
-          //     input: "$stories",
-          //     as: "story",
-          //     in: {
-          //       id: "$$story._id",
-          //       storyViews: "$$story.storyViews",
-          //       createdAt: "$$story.createdAt",
-          //     },
-          //   },
-          // },
           author: 1,
         },
       },
     ]);
 
-    console.log(stories);
     res.json(stories);
   } catch (error) {
     console.log(error);
