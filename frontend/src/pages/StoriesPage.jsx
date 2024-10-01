@@ -25,7 +25,7 @@ function StoriesPage() {
   const location = useLocation();
   console.log(location);
   console.log(location.state);
-  // const path  = location.state || '/
+  const path = location.state || "/";
   const navigate = useNavigate();
   const { stories } = useLoaderData();
   const { user } = useSelector((state) => state.user);
@@ -42,7 +42,7 @@ function StoriesPage() {
       setStoryIndex(storyIndex + 1);
       resetTimer();
     } else {
-      navigate(-1);
+      navigate(path);
     }
   };
 
@@ -112,7 +112,7 @@ function StoriesPage() {
         <Text
           as={"button"}
           onClick={() => {
-            navigate(-1);
+            navigate(path);
           }}
           position={"absolute"}
           top={"10px"}
