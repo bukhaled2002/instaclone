@@ -83,9 +83,9 @@ function StoriesPage() {
 
   useEffect(() => {
     if (isOpen) {
-      setIsPaused(true); // Pause timer
+      setIsPaused(true);
     } else {
-      setIsPaused(false); // Resume timer
+      setIsPaused(false);
     }
   }, [isOpen]);
 
@@ -97,7 +97,10 @@ function StoriesPage() {
   const [isLiked, setIsLiked] = useState(
     stories[storyIndex]?.likes.includes(user.id)
   );
-
+  useEffect(() => {
+    setIsLiked(stories[storyIndex]?.likes.includes(user.id));
+  }, [storyIndex]);
+  console.log("isLiked", stories[storyIndex]?.likes);
   const handleLikeStory = async () => {
     setIsLiked(!isLiked);
     const response = await customFetch.post(

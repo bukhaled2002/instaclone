@@ -42,6 +42,7 @@ function ProfilePage() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalData, setModalData] = useState(null);
+  console.log("is folowed", me.following.includes(user.id));
   const [isFollowing, setIsFollowing] = useState(
     me.following.includes(user.id)
   );
